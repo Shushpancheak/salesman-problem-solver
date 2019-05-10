@@ -1,5 +1,6 @@
 #include "SalesmanProblemExperimenter.hpp"
 #include "SalesmanProblemExperimentResult.hpp"
+#include "SalesmanProblemSolver.hpp"
 
 void SalesmanProblemExperimenter::Experiment(const size_t vertices_count,
                                              const size_t experiments_count,
@@ -9,6 +10,7 @@ void SalesmanProblemExperimenter::Experiment(const size_t vertices_count,
                ", and experiments count == " << experiments_count << std::endl;
 
   SalesmanProblemBuilder problem_builder;
+  SalesmanProblemSolver problem_solver = SalesmanProblemSolver(std::make_shared<>());
   std::vector<SalesmanProblemExperimentResult> results;
 
   for (size_t i = 0; i < experiments_count; ++i) {
@@ -19,5 +21,6 @@ void SalesmanProblemExperimenter::Experiment(const size_t vertices_count,
     for (auto& vertex : problem.optimal_path) {
       std::cout << vertex.from << " ";
     }
+
   }
 }
