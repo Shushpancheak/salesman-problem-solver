@@ -1,10 +1,6 @@
 #include "ArcGraph.hpp"
 #include <algorithm>
 
-ArcGraph::ArcGraph()
-  : arc_list_(0)
-  , vertices_count_(0) {}
-
 ArcGraph::ArcGraph(const size_t vertices_count) 
   : arc_list_(0)
   , vertices_count_(vertices_count) {}

@@ -9,12 +9,12 @@ class SalesmanProblemBuilder {
 public:
   SalesmanProblemBuilder();
   SalesmanProblem GetProblem(
-    double height, double width, size_t points_count);
+    double height, double width, size_t points_count) const;
 
 private:
-  void FillWithRandomPoints(Rectangle& rect,
+  static void FillWithRandomPoints(Rectangle& rect,
                             size_t points_count);
-  void ConstructArcGraphOnPoints(SalesmanProblem& prob,
+  void ConstructListGraphOnPoints(SalesmanProblem& prob,
                                  const Rectangle& rect) const;
   void FindOptimalPath(SalesmanProblem& problem) const;
 };

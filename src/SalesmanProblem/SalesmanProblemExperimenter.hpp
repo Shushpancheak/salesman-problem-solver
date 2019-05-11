@@ -6,5 +6,5 @@
 class SalesmanProblemExperimenter {
 public:
   void Experiment(size_t vertices_count, size_t experiments_count,
-                  double width = 100.0, double height = 100.0);
+                  double width = 1.0, double height = 1.0) const;
 };

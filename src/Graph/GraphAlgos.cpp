@@ -16,9 +16,9 @@ double graph_algos::GetPathLength(const std::vector<size_t>& vertices,
 std::vector<Edge> graph_algos::GetPath(const std::vector<size_t>& vertices,
                                        const std::shared_ptr<Graph>& graph) {
   std::vector<Edge> path;
-  for (size_t i = 0; i < vertices.size() - 1; ++i) {
+  for (size_t i = 0; i < vertices.size(); ++i) {
     for (auto const& edge : graph->GetNextEdges(vertices[i])) {
-      if (edge.to == vertices[i + 1]) {
+      if (edge.to == vertices[(i + 1) % vertices.size()]) {
         path.push_back(edge);
         break;
       }

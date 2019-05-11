@@ -11,10 +11,10 @@ struct Edge {
 // Oriented Graph.
 class Graph {
 public:
-  virtual ~Graph() = 0;
+  virtual ~Graph() = default;
 
   virtual size_t GetVerticesCount() const = 0;
   virtual std::vector<Edge> GetNextEdges(size_t from) const = 0;
-  virtual void AddEdge(const Edge& edge);
-  virtual void AddEdge(Edge&& edge);
+  virtual void AddEdge(const Edge& edge) = 0;
+  virtual void AddEdge(Edge&& edge) = 0;
 };

@@ -1,5 +1,6 @@
 #include "SalesmanProblemBuilder.hpp"
 #include "Graph/GraphAlgos.hpp"
+#include <chrono>
 
 void SalesmanProblemBuilder::FillWithRandomPoints(Rectangle& rect, const size_t points_count) {
   for (size_t i = 0; i < points_count; ++i) {
@@ -7,7 +8,7 @@ void SalesmanProblemBuilder::FillWithRandomPoints(Rectangle& rect, const size_t 
   }
 }
 
-void SalesmanProblemBuilder::ConstructArcGraphOnPoints(SalesmanProblem& prob, const Rectangle& rect) const {
+void SalesmanProblemBuilder::ConstructListGraphOnPoints(SalesmanProblem& prob, const Rectangle& rect) const {
   const size_t points_count = rect.GetPointsCount();
   std::vector<Point2> points = rect.GetPoints();
   prob.graph = std::make_shared<ListGraph>(points_count);
@@ -15,11 +16,14 @@ void SalesmanProblemBuilder::ConstructArcGraphOnPoints(SalesmanProblem& prob, co
   for (size_t i = 0; i < points_count; ++i) {
     for (size_t j = i + 1; j < points_count; ++j) {
       prob.graph->AddEdge({i, j, geometry::GetLength(points[i], points[j])});
+      prob.graph->AddEdge({j, i, geometry::GetLength(points[i], points[j])});
     }
   }
 }
 
 void SalesmanProblemBuilder::FindOptimalPath(SalesmanProblem& problem) const {
+  const auto start_time = std::chrono::steady_clock::now();
+
   const std::shared_ptr<Graph> graph = problem.graph;
   
   std::vector<size_t> current_permutation;
@@ -42,19 +46,23 @@ void SalesmanProblemBuilder::FindOptimalPath(SalesmanProblem& problem) const {
     std::next_permutation(current_permutation.begin(), current_permutation.end());
   }
 
+  const auto end_time = std::chrono::steady_clock::now();
+
   problem.optimal_path = graph_algos::GetPath(optimal_vertices, graph);
   problem.optimal_path_length = min_length;
+  problem.time_taken = static_cast<double>(
+    std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count());
 }
 
 SalesmanProblemBuilder::SalesmanProblemBuilder() = default;
 
 SalesmanProblem SalesmanProblemBuilder::GetProblem(
-  const double height, const double width, const size_t points_count) {
+  const double height, const double width, const size_t points_count) const {
   SalesmanProblem problem;
   Rectangle rect(width, height);
 
   FillWithRandomPoints(rect, points_count);
-  ConstructArcGraphOnPoints(problem, rect);
+  ConstructListGraphOnPoints(problem, rect);
   FindOptimalPath(problem);
 
   return problem;

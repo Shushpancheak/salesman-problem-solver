@@ -4,8 +4,8 @@
 
 class SalesmanProblemStrategy {
 public:
-  virtual ~SalesmanProblemStrategy() = 0;
+  virtual ~SalesmanProblemStrategy() = default;
 
   virtual SalesmanProblemSolvedResult
-    SolveForGraph(const std::shared_ptr<Graph>& graph) const;
+    SolveForGraph(const std::shared_ptr<Graph>& graph) const = 0;
 };

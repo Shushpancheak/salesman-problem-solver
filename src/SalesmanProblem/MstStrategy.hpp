@@ -9,5 +9,6 @@ public:
   SalesmanProblemSolvedResult SolveForGraph(const std::shared_ptr<Graph>& graph) const override;
   
 private:
-  std::vector<Edge> GetHamiltonPath(const ListGraph& double_mst_graph) const;
+  static std::vector<Edge> GetHamiltonPath(const ListGraph& double_mst_graph,
+                                    const std::shared_ptr<Graph>& graph);
 };
