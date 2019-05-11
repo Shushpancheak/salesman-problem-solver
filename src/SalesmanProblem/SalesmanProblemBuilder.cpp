@@ -48,7 +48,7 @@ void SalesmanProblemBuilder::FindOptimalPath(SalesmanProblem& problem) const {
 
   const auto end_time = std::chrono::steady_clock::now();
 
-  problem.optimal_path = graph_algos::GetPath(optimal_vertices, graph);
+  problem.optimal_path = graph_algos::GetEdgePath(optimal_vertices, graph);
   problem.optimal_path_length = min_length;
   problem.time_taken = static_cast<double>(
     std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count());

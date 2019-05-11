@@ -61,7 +61,7 @@ std::vector<Edge> MstStrategy::GetHamiltonPath(const ListGraph& double_mst_graph
     ++cur_next[cur_vertex];
   }
 
-  return graph_algos::GetPath(vertices_path, graph);
+  return graph_algos::GetEdgePath(vertices_path, graph);
 }
 
 void MstStrategy::RemoveReverseEdges(ArcGraph& graph) {

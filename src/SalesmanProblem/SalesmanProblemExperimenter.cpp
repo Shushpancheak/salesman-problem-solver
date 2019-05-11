@@ -2,17 +2,20 @@
 #include "SalesmanProblemExperimentResult.hpp"
 #include "SalesmanProblemSolver.hpp"
 #include "MstStrategy.hpp"
+#include "SimulatedAnnealingStrategy.hpp"
 
 void SalesmanProblemExperimenter::Experiment(const size_t vertices_count,
-    const size_t experiments_count, const double width, const double height) const {
+    const size_t experiments_count, const int method_id, const double width, const double height) const {
   std::cout << std::endl << std::endl <<
     "#################### EXPERIMENTS WITH N == " << vertices_count << " ####################" << std::endl;
   std::cout << "Starting TSP experiment with vertices count == " << vertices_count <<
                ", and experiments count == " << experiments_count << std::endl;
+  std::cout << "Using " << (method_id == 0 ? "MST with Hamilton Traverse" : "Simulated Annealing") << " algorithm";
 
   SalesmanProblemBuilder problem_builder;
-  SalesmanProblemSolver problem_solver =
-    SalesmanProblemSolver(std::make_shared<MstStrategy>());
+  SalesmanProblemSolver problem_solver = method_id == 0 ?
+      SalesmanProblemSolver(std::make_shared<MstStrategy>()) :
+      SalesmanProblemSolver(std::make_shared<SimulatedAnnealingStrategy>());
   std::vector<SalesmanProblemExperimentResult> results;
 
   for (size_t i = 0; i < experiments_count; ++i) {
