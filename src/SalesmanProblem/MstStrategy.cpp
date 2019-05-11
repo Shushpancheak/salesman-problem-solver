@@ -9,7 +9,8 @@ SalesmanProblemSolvedResult MstStrategy::SolveForGraph(
     const std::shared_ptr<Graph>& graph) const {
   const auto start_time = std::chrono::steady_clock::now();
 
-  const ArcGraph arc_graph(graph);
+  ArcGraph arc_graph(graph);
+  RemoveReverseEdges(arc_graph);
   const std::shared_ptr<Graph> arc_mst =
     std::make_shared<ArcGraph>(MstBuilderBoruvka<true>::BuildMst(arc_graph));
   const ListGraph mst_graph = ListGraph(arc_mst);
@@ -60,7 +61,27 @@ std::vector<Edge> MstStrategy::GetHamiltonPath(const ListGraph& double_mst_graph
     ++cur_next[cur_vertex];
   }
 
-  vertices_path.push_back(0);
-
   return graph_algos::GetPath(vertices_path, graph);
+}
+
+void MstStrategy::RemoveReverseEdges(ArcGraph& graph) {
+  auto edges = graph.GetEdgesAll();
+  std::vector<char> to_be_removed(edges.size(), false);
+
+  for (size_t i = 0; i < edges.size(); ++i) {
+    for (size_t j = i + 1; j < edges.size(); ++j) {
+      if (edges[i].from == edges[j].to && edges[i].to == edges[j].from) {
+        to_be_removed[j] = true;
+      }
+    }
+  }
+
+  ArcGraph new_graph(graph.GetVerticesCount());
+  for (size_t i = 0; i < edges.size(); ++i) {
+    if (!to_be_removed[i]) {
+      new_graph.AddEdge(edges[i]);
+    }
+  }
+
+  graph = new_graph;
 }

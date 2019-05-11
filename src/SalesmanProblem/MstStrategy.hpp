@@ -11,4 +11,5 @@ public:
 private:
   static std::vector<Edge> GetHamiltonPath(const ListGraph& double_mst_graph,
                                     const std::shared_ptr<Graph>& graph);
+  static void RemoveReverseEdges(ArcGraph& graph);
 };

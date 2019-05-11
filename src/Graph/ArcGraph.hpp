@@ -10,6 +10,8 @@ public:
   explicit ArcGraph(const std::shared_ptr<Graph>& graph);
   ~ArcGraph();
 
+  ArcGraph& operator=(const ArcGraph& graph) = default;
+
   size_t GetVerticesCount() const override;
   // O(n)
   std::vector<Edge> GetNextEdges(size_t from) const override;

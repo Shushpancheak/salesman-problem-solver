@@ -5,7 +5,7 @@
 Rectangle::Rectangle(const double width, const double height)
   : points_(0)
   , size_{width, height}
-  , random_generator_(time(nullptr))
+  , random_generator_(rand())
   , x_distribution_(width / 2)
   , y_distribution_(height / 2) {}
 

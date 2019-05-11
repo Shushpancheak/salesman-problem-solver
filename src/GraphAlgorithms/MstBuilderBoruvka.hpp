@@ -21,7 +21,7 @@ ArcGraph MstBuilderBoruvka<DoubleMst>::BuildMst(const ArcGraph& graph) {
   const size_t kNoneVertex = UINT_MAX;
 
   Dsu<size_t, kNoneVertex> dsu;
-  for (size_t i = 1; i <= vertices_count; ++i) {
+  for (size_t i = 0; i < vertices_count; ++i) {
     dsu.MakeSet(i);
   }
   std::vector<Edge> edges = graph.GetEdgesAll();
@@ -49,9 +49,7 @@ ArcGraph MstBuilderBoruvka<DoubleMst>::BuildMst(const ArcGraph& graph) {
     for (auto& min_edge : min_edges) {
       if (dsu.UniteSets(min_edge.second.edge.from, min_edge.second.edge.to)) {
         --components_count;
-        if (components_count == 0) {
-          break;
-        }
+        
         result.AddEdge(min_edge.second.edge);
         if (DoubleMst) {
           result.AddEdge(GetReversed(min_edge.second.edge));
