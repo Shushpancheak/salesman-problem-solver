@@ -1,5 +1,5 @@
 # TSP auto experimenter.
-Automatically solves TSP using algorithm with length of the path < 2 * optimal or Simulated annealing.
+A console application that automatically creates and solves random Travelling Salesman Problems with detailed output. The user can switch between Simulated Annealing and Hamilton traverse algorithms to construct the desired minimal path.
 
 ## Execution
 ```bash
